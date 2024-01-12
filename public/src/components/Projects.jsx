@@ -9,10 +9,10 @@ export default function Projects() {
         <div className="container">
           <h3>Projects #Node.js #React.js #MongoDB #Javascript</h3>
           <div className="projects">
-            <DetailProject />
-            <DetailProject />
-            <DetailProject />
-            <DetailProject />
+            <DetailProject
+              imgSrc="https://media.istockphoto.com/id/952067048/photo/schedule-management-of-business-concept.webp?b=1&s=170667a&w=0&k=20&c=pAovA-bpoCaC9xg39sJcV89OMI8UDRAVjP0qUYGMEj8="
+              name="Task Manager"
+            />
           </div>
         </div>
       </Container>
@@ -22,12 +22,12 @@ export default function Projects() {
 
 const Container = styled.div`
   height: 100vh;
-
   .container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-top: 2rem;
   }
   .projects {
     display: grid;

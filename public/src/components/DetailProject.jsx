@@ -1,16 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 
-export default function DetailProject() {
+export default function DetailProject({ imgSrc, name }) {
   return (
     <>
       <Container>
         <div className="container">
-          <img
-            src="https://www.idurarapp.com/file/2023/09/08/graphql_4.png"
-            alt=""
-          />
-          <p>React Js Developers Create a Email Editor with React-Quill</p>
+          <img src={imgSrc} alt="" />
+          <p>{name}</p>
         </div>
       </Container>
     </>
@@ -19,6 +16,7 @@ export default function DetailProject() {
 
 const Container = styled.div`
   .container {
+    margin-top: 1rem;
   }
   img {
     width: 75%;

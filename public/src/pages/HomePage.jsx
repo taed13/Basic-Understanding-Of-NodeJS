@@ -15,6 +15,7 @@ export default function HomePage() {
           <img
             src="https://c4.wallpaperflare.com/wallpaper/348/534/415/into-the-wild-christopher-mccandless-movie-scenes-men-wallpaper-preview.jpg"
             alt="into the wild"
+            className="img-parent"
           />
           <div className="content" onClick={handleClick}>
             <h1>Home page about projects to understand nodejs</h1>
@@ -24,7 +25,7 @@ export default function HomePage() {
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                strokeWidth={1.5}
+                strokeWidth={2.0}
                 stroke="currentColor"
                 className="w-6 h-6"
               >
@@ -50,7 +51,7 @@ const Container = styled.div`
     display: flex;
     align-items: center;
   }
-  img {
+  .img-parent {
     width: 50%;
     height: 100vh;
     object-fit: cover;
