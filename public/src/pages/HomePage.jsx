@@ -17,9 +17,9 @@ export default function HomePage() {
             alt="into the wild"
             className="img-parent"
           />
-          <div className="content" onClick={handleClick}>
+          <div className="content">
             <h1>Home page about projects to understand nodejs</h1>
-            <span className="scroll">
+            <span className="scroll" onClick={handleClick}>
               Scroll down to discover
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -60,15 +60,19 @@ const Container = styled.div`
   .content {
     text-align: center;
     padding: 2rem;
-    cursor: pointer;
   }
+
   h1 {
     text-transform: uppercase;
     font-size: 1.8rem;
   }
   span {
     font-size: 1.2rem;
+    cursor: pointer;
     color: #777;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   svg {
     width: 1rem;

@@ -19,7 +19,7 @@ const Container = styled.div`
     margin-top: 1rem;
   }
   img {
-    width: 75%;
+    width: 100%;
     height: 15vh;
     object-fit: cover;
     border-radius: 1rem 1rem 0 0;
