@@ -60,7 +60,24 @@ module.exports.getTask = async (req, res, next) => {
 
 module.exports.updateTask = async (req, res, next) => {
   try {
-  } catch (error) {}
+    const { id } = req.params;
+    const task = await taskManagerModel.findByIdAndUpdate(id, {
+      name: req.body.name,
+      completed: req.body.completed,
+    });
+
+    if (!task) {
+      return res.status(404).json({
+        success: false,
+        message: "Task not found",
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
 };
 
 module.exports.deleteTask = async (req, res, next) => {
@@ -73,6 +90,32 @@ module.exports.deleteTask = async (req, res, next) => {
         message: "Task not found",
       });
     }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+module.exports.updateTaskComplete = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const task = await taskManagerModel.findByIdAndUpdate(
+      id,
+      { completed: true },
+      { new: true }
+    );
+    if (!task) {
+      return res.status(404).json({
+        success: false,
+        message: "Task not found",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      data: task,
+    });
   } catch (error) {
     res.status(500).json({
       success: false,

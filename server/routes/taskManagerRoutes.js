@@ -4,6 +4,7 @@ const {
   getTask,
   updateTask,
   deleteTask,
+  updateTaskComplete,
 } = require("../controllers/taskManagerControllers");
 
 const router = require("express").Router();
@@ -13,6 +14,7 @@ router.post("/tasks", createTask);
 router.get("/tasks/:id", getTask);
 router.patch("/tasks/:id", updateTask);
 router.delete("/tasks/:id", deleteTask);
+router.patch("/tasks/:id/complete", updateTaskComplete);
 
 module.exports = router;
 

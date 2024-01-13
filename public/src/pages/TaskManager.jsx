@@ -3,8 +3,12 @@ import {
   createTaskRoute,
   deleteTaskRoute,
   getAllTasksRoute,
+  updateTaskRoute,
 } from "../utils/APIRoutes";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function TaskManager() {
   const [isModalEditOpen, setIsModalEditOpen] = useState(false);
@@ -14,17 +18,25 @@ export default function TaskManager() {
   const [taskCurrent, setTaskCurrent] = useState("");
   const [isCompleted, setIsCompleted] = useState(false);
 
+  const navigate = useNavigate();
+
+  const toastOptions = {
+    position: "bottom-right",
+    autoClose: 2000,
+    pauseOnHover: true,
+    draggable: true,
+  };
+
   const handleComplete = (id) => {
-    console.log("id:", id);
-    // axios
-    //   .put(`${getAllTasksRoute}/${id}`, { completed: !isCompleted })
-    //   .then((response) => {
-    //     console.log("response:", response);
-    //     setTasks(response.data.data);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error updating task:", error);
-    //   });
+    axios
+      .patch(`${getAllTasksRoute}/${id}/complete`)
+      .then((response) => {
+        // Handle the response here
+      })
+      .catch((error) => {
+        // Handle the error here
+        console.error("Error updating task:", error);
+      });
   };
 
   const handleCreateTask = (event) => {
@@ -32,9 +44,9 @@ export default function TaskManager() {
     axios
       .post(createTaskRoute, { name: taskName })
       .then((response) => {
-        console.log("response:", response);
         setTasks([...tasks, response.data.data]);
         setTaskName("");
+        toast.success("Task created successfully!", toastOptions);
       })
       .catch((error) => {
         console.error("Error creating task:", error);
@@ -50,6 +62,26 @@ export default function TaskManager() {
       .catch((error) => {
         console.error("Error deleting task:", error);
       });
+
+    toast.success("Task deleted successfully!", toastOptions);
+  };
+
+  const handleEditTask = (task) => {
+    axios
+      .patch(`${updateTaskRoute}/${task._id}`, task)
+      .then((response) => {
+        // console.log(response.data);
+        setTasks(
+          tasks.map((task) =>
+            task._id === response.data.data._id ? response.data.data : task
+          )
+        );
+      })
+      .catch((error) => {
+        console.error("Error updating task:", error);
+      });
+
+    toast.success("Task updated successfully!", toastOptions);
   };
 
   useEffect(() => {
@@ -65,10 +97,30 @@ export default function TaskManager() {
 
   // console.log("tasks:", tasks);
 
+  // Inside your component
+
   return (
     <>
       <div className="md:container md:mx-auto pt-3">
-        <h1 className="text-4xl text-center w-screen">Task Manager</h1>
+        <div className="flex">
+          <button onClick={() => navigate(-1)}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"
+              />
+            </svg>
+          </button>
+          <h1 className="text-4xl text-center w-screen">Task Manager</h1>
+        </div>
         <div className="submit-task flex justify-center pt-2 w-screen">
           <form className="flex flex-col bg-slate-500 p-5 rounded-xl w-1/3">
             <label htmlFor="task" className="cursor-pointer ">
@@ -250,7 +302,10 @@ export default function TaskManager() {
                             <button
                               className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                               type="button"
-                              onClick={() => setIsModalEditOpen(false)}
+                              onClick={() => {
+                                setIsModalEditOpen(false);
+                                handleEditTask(taskCurrent);
+                              }}
                             >
                               Save Changes
                             </button>
@@ -284,7 +339,6 @@ export default function TaskManager() {
                     />
                   </svg>
                 </button>
-
                 {isModelDeleteOpen ? (
                   <>
                     <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
@@ -341,6 +395,7 @@ export default function TaskManager() {
             ))}
           </ul>
         </div>
+        <ToastContainer />
       </div>
     </>
   );
