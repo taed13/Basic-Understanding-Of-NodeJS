@@ -125,7 +125,13 @@ export default function TaskManager() {
                   />
                 )}
 
-                <p className="text-black w-10/12 px-2">{task.name}</p>
+                <p
+                  className={`text-black w-10/12 px-2 ${
+                    task.completed ? "line-through" : ""
+                  }`}
+                >
+                  {task.name}
+                </p>
                 <button
                   className="block text-teal-600 rounded-md py-1 px-2 w-1/12"
                   type="button"
