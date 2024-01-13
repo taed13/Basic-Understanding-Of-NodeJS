@@ -1,17 +1,18 @@
-// const {
-//     register,
-//     login,
-//     set_avatar,
-//     getAllUsers,
-//   } = require("../controllers/usersController");
+const {
+  getAllTasks,
+  createTask,
+  getTask,
+  updateTask,
+  deleteTask,
+} = require("../controllers/taskManagerControllers");
 
 const router = require("express").Router();
 
-app.get("/api/v1/tasks", getAllTasks);
-app.post("/api/v1/tasks", createTask);
-app.get("/api/v1/tasks/:id", getTask);
-app.patch("/api/v1/tasks/:id", updateTask);
-app.delete("/api/v1/tasks/:id", deleteTask);
+router.get("/tasks", getAllTasks);
+router.post("/tasks", createTask);
+router.get("/tasks/:id", getTask);
+router.patch("/tasks/:id", updateTask);
+router.delete("/tasks/:id", deleteTask);
 
 module.exports = router;
 

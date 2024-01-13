@@ -1,40 +1,82 @@
-const messageModel = require("../model/messageModel");
+const taskManagerModel = require("../models/taskManagerModel");
 
-module.exports.addMessage = async (req, res, next) => {
+// app.get('/api/v1/tasks') - get all the tasks
+// app.post('/api/v1/tasks') - create a new task
+// app.get('/api/v1/tasks/:id') - get a single task
+// app.patch('/api/v1/tasks/:id') - update task
+// app.delete('/api/v1/tasks/:id') - delete task
+
+module.exports.getAllTasks = async (req, res, next) => {
   try {
-    const { from, to, message } = req.body;
-    const data = await messageModel.create({
-      message: { text: message },
-      users: [from, to],
-      sender: from,
+    const tasks = await taskManagerModel.find({});
+    res.status(200).json({
+      success: true,
+      data: tasks,
     });
-
-    if (data) return res.json({ msg: "Message added successfully." });
-    return res.json({ msg: "Fail to add message to the database." });
   } catch (error) {
-    next(error);
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
   }
 };
 
-module.exports.getAllMessage = async (req, res, next) => {
+module.exports.createTask = async (req, res, next) => {
   try {
-    const { from, to } = req.body;
-    const messages = await messageModel
-      .find({
-        users: {
-          $all: [from, to],
-        },
-      })
-      .sort({ updatedAt: 1 });
-
-    const projectMessages = messages.map((msg) => {
-      return {
-        fromSelf: msg.sender.toString() === from,
-        message: msg.message.text,
-      };
+    const task = await taskManagerModel.create(req.body);
+    res.status(201).json({
+      success: true,
+      data: task,
     });
-    res.json(projectMessages);
   } catch (error) {
-    next(error);
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+module.exports.getTask = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const task = await taskManagerModel.findById(id);
+    if (!task) {
+      return res.status(404).json({
+        success: false,
+        message: "Task not found",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      data: task,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+module.exports.updateTask = async (req, res, next) => {
+  try {
+  } catch (error) {}
+};
+
+module.exports.deleteTask = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const task = await taskManagerModel.findByIdAndDelete(id);
+    if (!task) {
+      return res.status(404).json({
+        success: false,
+        message: "Task not found",
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
   }
 };

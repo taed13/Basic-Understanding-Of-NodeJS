@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const taskManagerRoutes = require("./routes/taskManagerRoutes");
 const app = express();
 
 require("dotenv").config();
@@ -15,6 +16,7 @@ app.get("/", (req, res) => {
 });
 
 // Routes
+app.use("/api/v1", taskManagerRoutes);
 
 const connectDatabase = () => {
   const mongoDbUrl = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_CLUSTER}/${process.env.MONGO_DATABASE}?retryWrites=true&w=majority`;
