@@ -11,11 +11,22 @@ export default function QRCodeGenerator() {
   const [colorLight, setColorLight] = useState("#ffffff");
   const [colorDark, setColorDark] = useState("#000000");
   const [nameQR, setNameQR] = useState("qrcode");
+  const toastOptions = {
+    position: "bottom-right",
+    autoClose: 2000,
+    pauseOnHover: true,
+    draggable: true,
+  };
 
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if (!textString || !colorLight || !colorDark || !nameQR) {
+      toast.warn("Please fill in all fields.", toastOptions);
+      return;
+    }
 
     try {
       const response = await axios.post(getQrCodeRoute, {
@@ -25,11 +36,10 @@ export default function QRCodeGenerator() {
         colorLight: colorLight,
       });
       console.log(response.data);
+      toast.success("QR Code saved successfully!", toastOptions);
     } catch (error) {
       console.error("Error:", error);
     }
-
-    toast.success("QR Code saved successfully!", toastOptions);
   };
 
   const downloadQRCode = () => {
@@ -44,13 +54,6 @@ export default function QRCodeGenerator() {
     document.body.appendChild(downloadLink);
     downloadLink.click();
     document.body.removeChild(downloadLink);
-  };
-
-  const toastOptions = {
-    position: "bottom-right",
-    autoClose: 2000,
-    pauseOnHover: true,
-    draggable: true,
   };
 
   return (
@@ -166,6 +169,7 @@ export default function QRCodeGenerator() {
           Push into DB
         </button>
       </form>
+      <ToastContainer />
     </>
   );
 }
