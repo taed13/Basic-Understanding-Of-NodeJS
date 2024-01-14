@@ -28,6 +28,8 @@ export default function QRCodeGenerator() {
     } catch (error) {
       console.error("Error:", error);
     }
+
+    toast.success("QR Code saved successfully!", toastOptions);
   };
 
   const downloadQRCode = () => {
