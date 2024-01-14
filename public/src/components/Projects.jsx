@@ -16,6 +16,18 @@ export default function Projects() {
                 name="Task Manager"
               />
             </Link>
+            <Link to="https://chatapp-ui-roan.vercel.app/">
+              <DetailProject
+                imgSrc="https://hocspringboot.net/wp-content/uploads/2020/12/chat-realtime.png"
+                name="Chat App Real Time"
+              />
+            </Link>
+            <Link to="/qrcode-generator">
+              <DetailProject
+                imgSrc="https://www.qr-generator.nu/qrcode.svg?download=1"
+                name="QR Code Generator"
+              />
+            </Link>
           </div>
         </div>
       </Container>
