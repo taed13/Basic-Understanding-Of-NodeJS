@@ -18,7 +18,7 @@ export default function Projects() {
             </Link>
             <Link to="https://chatapp-ui-roan.vercel.app/">
               <DetailProject
-                imgSrc="https://hocspringboot.net/wp-content/uploads/2020/12/chat-realtime.png"
+                imgSrc="https://static.vecteezy.com/system/resources/thumbnails/021/885/976/original/4k-animation-of-chat-mobile-application-for-business-businessman-and-businesswoman-communicate-with-mobile-app-on-big-hand-holding-smart-phone-free-video.jpg"
                 name="Chat App Real Time"
               />
             </Link>
