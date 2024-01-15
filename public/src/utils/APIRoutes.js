@@ -6,3 +6,5 @@ export const getTaskRoute = `${host}/api/v1/tasks`;
 export const updateTaskRoute = `${host}/api/v1/tasks`;
 export const deleteTaskRoute = `${host}/api/v1/tasks`;
 export const getQrCodeRoute = `${host}/api/v1/qrcode`;
+export const uploadCloudinaryRoute = `${host}/api/v1/cloudinary-upload`;
+export const getAllQrCodes = `${host}/api/v1/qrcodes`;
