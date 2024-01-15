@@ -8,3 +8,6 @@ export const deleteTaskRoute = `${host}/api/v1/tasks`;
 export const getQrCodeRoute = `${host}/api/v1/qrcode`;
 export const uploadCloudinaryRoute = `${host}/api/v1/cloudinary-upload`;
 export const getAllQrCodes = `${host}/api/v1/qrcodes`;
+
+// http://127.0.0.1:1337/api/v1/books
+export const createBookRoute = `${host}/api/v1/books`;

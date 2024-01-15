@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
   createTaskRoute,
-  deleteTaskRoute,
   getAllTasksRoute,
   updateTaskRoute,
 } from "../utils/APIRoutes";
@@ -16,7 +15,6 @@ export default function TaskManager() {
   const [tasks, setTasks] = useState([]);
   const [taskName, setTaskName] = useState("");
   const [taskCurrent, setTaskCurrent] = useState("");
-  const [isCompleted, setIsCompleted] = useState(false);
 
   const navigate = useNavigate();
 

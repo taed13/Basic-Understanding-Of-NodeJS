@@ -28,6 +28,12 @@ export default function Projects() {
                 name="QR Code Generator"
               />
             </Link>
+            <Link to="/book-directory">
+              <DetailProject
+                imgSrc="https://e0.pxfuel.com/wallpapers/540/340/desktop-wallpaper-lot-of-books-in-library.jpg"
+                name="Book Directory"
+              />
+            </Link>
           </div>
         </div>
       </Container>

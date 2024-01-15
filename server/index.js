@@ -3,6 +3,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const taskManagerRoutes = require("./routes/taskManagerRoutes");
 const qrCodeRoute = require("./routes/qrCodeRoute");
+const bookDirectoryRoute = require("./routes/bookDirectoryRoutes");
 const app = express();
 
 require("dotenv").config();
@@ -19,6 +20,7 @@ app.get("/", (req, res) => {
 // Routes
 app.use("/api/v1", taskManagerRoutes);
 app.use("/api/v1", qrCodeRoute);
+app.use("/api/v1", bookDirectoryRoute);
 
 const connectDatabase = () => {
   const mongoDbUrl = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_CLUSTER}/${process.env.MONGO_DATABASE}?retryWrites=true&w=majority`;
