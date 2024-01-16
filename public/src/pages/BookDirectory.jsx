@@ -105,13 +105,9 @@ export default function BookDirectory() {
             scrollToFirstError
           >
             <Form.Item
-              name="bookTitle"
+              name="title"
               label="Book Title"
               rules={[
-                {
-                  type: "string",
-                  message: "The input is not valid Book Title!",
-                },
                 {
                   required: true,
                   message: "Please input your Book Title!",

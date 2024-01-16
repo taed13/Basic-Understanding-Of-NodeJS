@@ -119,7 +119,9 @@ export default function DetailBook({ book }) {
                               </p>
                             </div>
                             <div className="status ">
-                              <p className="text-yellow-700 ">{book.status}</p>
+                              <p className="text-yellow-700 ">
+                                {book.status} - ISBN: {book.isbn}
+                              </p>
                             </div>
                           </div>
 
@@ -253,8 +255,10 @@ export default function DetailBook({ book }) {
                                 )
                               </p>
                             </div>
-                            <div className="status ">
-                              <p className="text-yellow-700 ">{book.status}</p>
+                            <div className="statusNisbn">
+                              <p className="text-yellow-700 ">
+                                {book.status} - ISBN: {book.isbn}
+                              </p>
                             </div>
                           </div>
 
