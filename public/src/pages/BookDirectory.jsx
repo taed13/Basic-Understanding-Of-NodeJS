@@ -6,6 +6,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ListBook from "../components/ListBook";
+import { useNavigate } from "react-router-dom";
 
 const formItemLayout = {
   labelCol: {
@@ -39,6 +40,7 @@ const tailFormItemLayout = {
 };
 
 export default function BookDirectory() {
+  const navigate = useNavigate();
   const [form] = Form.useForm();
 
   const toastOptions = {
@@ -71,6 +73,22 @@ export default function BookDirectory() {
     bg-gray-200 p-3 border rounded-xl
     "
     >
+      <button onClick={() => navigate(-1)} className="mb-3">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="w-6 h-6"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"
+          />
+        </svg>
+      </button>
       <h1 className="bg-gray-300 text-4xl p-3 border rounded-xl">
         Book Directory
       </h1>

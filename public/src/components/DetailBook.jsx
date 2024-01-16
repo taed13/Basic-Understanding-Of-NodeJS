@@ -203,104 +203,112 @@ export default function DetailBook({ book }) {
             </button>
             {isModalEditOpen ? (
               <>
-                <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-                  <div className="relative w-screen my-6 mx-auto max-w-3xl">
+                <div
+                  className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
+                  onClick={() => setIsModalEditOpen(false)}
+                >
+                  <div
+                    className="relative w-screen my-6 mx-auto max-w-3xl"
+                    onClick={(e) => e.stopPropagation()}
+                  >
                     {/*content*/}
                     <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                       {/*header*/}
-                      <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
-                        <h3 className="text-3xl font-semibold">Edit Task</h3>
-                        <button
-                          className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                          onClick={() => setIsModalEditOpen(false)}
-                        >
-                          <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                            ×
-                          </span>
-                        </button>
-                      </div>
-                      {/*body*/}
-                      <div className="relative p-6 flex-auto">
-                        <div className="flex my-2">
-                          <label
-                            htmlFor="taskID"
-                            className="w-2/6 self-center mr-2"
-                          >
-                            Task ID
-                          </label>
-                          <input
-                            type="text"
-                            name="taskID"
-                            id="taskID"
-                            disabled
-                            className="border-2 border-gray-400 rounded-md px-2 w-4/6"
-                            placeholder="e.g. 1234"
-                            // value={taskCurrent._id}
+
+                      <div className="grid grid-cols-12">
+                        <div className="col-span-4 bg-gray-300 border rounded-lg p-4">
+                          <img
+                            src={book.thumbnailUrl}
+                            alt={book.title}
+                            className="w-64 h-64 rounded-lg"
                           />
                         </div>
-                        <div className="flex my-2">
-                          <label
-                            htmlFor="name"
-                            className="w-2/6 self-center mr-2"
-                          >
-                            Name
-                          </label>
-                          <input
-                            type="text"
-                            name="name"
-                            id="name"
-                            className="border-2 border-gray-400 rounded-md px-2 w-4/6"
-                            placeholder="e.g. wash the dishes"
-                            // value={taskCurrent.name}
-                            // onChange={(e) =>
-                            //   setTaskCurrent({
-                            //     ...taskCurrent,
-                            //     name: e.target.value,
-                            //   })
-                            // }
-                          />
+                        <div className="col-span-8 bg-gray-300 border rounded-lg p-4">
+                          <div className="border-b border-gray-400">
+                            <div className="titleNpublishdate flex items-center">
+                              <h2 className="text-xl font-bold mr-2">
+                                {book.title}
+                              </h2>{" "}
+                              -
+                              <p className="text-gray-500 ml-2">
+                                {new Date(
+                                  book.publishedDate
+                                ).toLocaleDateString("en-US", {
+                                  year: "numeric",
+                                  month: "long",
+                                  day: "2-digit",
+                                })}
+                              </p>
+                            </div>
+                            <div className="authors flex items-center">
+                              <p className="mr-2">
+                                by{" "}
+                                <span className=" text-blue-600">
+                                  {book.authors.join(", ")}
+                                </span>{" "}
+                                (
+                                {book.authors.length >= 2
+                                  ? "Authors"
+                                  : "Author"}
+                                )
+                              </p>
+                            </div>
+                            <div className="status ">
+                              <p className="text-yellow-700 ">{book.status}</p>
+                            </div>
+                          </div>
+
+                          <div className="description mt-2 p-3">
+                            {book.shortDescription && (
+                              <>
+                                <p className="font-semibold">
+                                  SHORT DESCRIPTION
+                                </p>
+                                <p>
+                                  {showMoreShort
+                                    ? book.shortDescription
+                                    : `${book.shortDescription.substring(
+                                        0,
+                                        100
+                                      )}...`}
+                                </p>
+                                <button
+                                  onClick={() =>
+                                    setShowMoreShort(!showMoreShort)
+                                  }
+                                  className="text-blue-500 hover:underline bg-transparent border-none"
+                                >
+                                  {showMoreShort ? "Show Less" : "Show More"}
+                                </button>
+                              </>
+                            )}
+                            {book.longDescription && (
+                              <>
+                                <p className="font-semibold mt-2">
+                                  LONG DESCRIPTION
+                                </p>
+                                <p>
+                                  {showMoreLong
+                                    ? book.longDescription
+                                    : `${book.longDescription.substring(
+                                        0,
+                                        100
+                                      )}...`}
+                                </p>
+                                <button
+                                  onClick={() => setShowMoreLong(!showMoreLong)}
+                                  className="text-blue-500 hover:underline bg-transparent border-none"
+                                >
+                                  {showMoreLong ? "Show Less" : "Show More"}
+                                </button>
+                              </>
+                            )}
+                            {!book.shortDescription &&
+                              !book.longDescription && (
+                                <p>Don't have description</p>
+                              )}
+                          </div>
                         </div>
-                        <div className="flex my-2">
-                          <label
-                            htmlFor="completed"
-                            className="w-2/6 self-center mr-2"
-                          >
-                            Completed
-                          </label>
-                          <input
-                            type="checkbox"
-                            name="completed"
-                            id="completed"
-                            className="border-2 border-gray-400 rounded-md px-2 w-4/6 cursor-pointer"
-                            // checked={taskCurrent.completed}
-                            // onChange={(e) =>
-                            //   setTaskCurrent({
-                            //     ...taskCurrent,
-                            //     completed: e.target.checked,
-                            //   })
-                            // }
-                          />
-                        </div>
-                      </div>
-                      {/*footer*/}
-                      <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
-                        <button
-                          className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                          type="button"
-                          onClick={() => setIsModalEditOpen(false)}
-                        >
-                          Close
-                        </button>
-                        <button
-                          className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                          type="button"
-                          onClick={() => {
-                            setIsModalEditOpen(false);
-                            // handleEditTask(taskCurrent);
-                          }}
-                        >
-                          Save Changes
-                        </button>
                       </div>
                     </div>
                   </div>
