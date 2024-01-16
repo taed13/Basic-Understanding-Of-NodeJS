@@ -123,6 +123,19 @@ export default function DetailBook({ book }) {
                                 {book.status} - ISBN: {book.isbn}
                               </p>
                             </div>
+
+                            <div className="categories flex items-center">
+                              <p className="mr-2">
+                                <span className=" text-blue-600">
+                                  {book.categories.join(", ")}
+                                </span>{" "}
+                                (
+                                {book.categories.length >= 2
+                                  ? "Categories"
+                                  : "Category"}
+                                )
+                              </p>
+                            </div>
                           </div>
 
                           <div className="description mt-2 p-3">
