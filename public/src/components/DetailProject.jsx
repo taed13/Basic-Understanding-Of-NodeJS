@@ -6,7 +6,7 @@ export default function DetailProject({ imgSrc, name }) {
     <>
       <Container>
         <div className="container">
-          <img src={imgSrc} alt="" />
+          <img src={imgSrc} className=" " alt="" />
           <p>{name}</p>
         </div>
       </Container>

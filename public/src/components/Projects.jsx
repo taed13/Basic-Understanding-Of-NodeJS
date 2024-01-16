@@ -34,6 +34,18 @@ export default function Projects() {
                 name="Book Directory"
               />
             </Link>
+            <Link to="https://nhanhouse.vercel.app/">
+              <DetailProject
+                imgSrc="https://media-cdn.tripadvisor.com/media/photo-p/18/8c/39/6c/nhanhouse-mat-truoc.jpg"
+                name="Nhan House"
+              />
+            </Link>
+            <Link to="/discord-bot">
+              <DetailProject
+                imgSrc="https://images.ctfassets.net/lzny33ho1g45/how-to-make-discord-bot-withou-p-img/18fdb59df96ee1bc0a4dcc7ac4ceec2f/Group_12427.jpg?w=1520&fm=jpg&q=30&fit=thumb&h=760"
+                name="Discord Bot"
+              />
+            </Link>
           </div>
         </div>
       </Container>

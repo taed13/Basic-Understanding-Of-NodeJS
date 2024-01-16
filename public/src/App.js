@@ -4,6 +4,7 @@ import HomePage from "./pages/HomePage";
 import TaskManager from "./pages/TaskManager";
 import QRCodeGenerator from "./pages/QRCodeGenerator";
 import BookDirectory from "./pages/BookDirectory";
+import DiscordBot from "./pages/DiscordBot";
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
         <Route path="/task-manager" element={<TaskManager />} />
         <Route path="/qrcode-generator" element={<QRCodeGenerator />} />
         <Route path="/book-directory" element={<BookDirectory />} />
+        <Route path="/discord-bot" element={<DiscordBot />} />
       </Routes>
     </BrowserRouter>
   );
