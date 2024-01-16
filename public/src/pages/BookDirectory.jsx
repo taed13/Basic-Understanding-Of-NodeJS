@@ -3,6 +3,9 @@ import { Button, Form, Input, Select, DatePicker } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { createBookRoute } from "../utils/APIRoutes";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import ListBook from "../components/ListBook";
 
 const formItemLayout = {
   labelCol: {
@@ -37,6 +40,13 @@ const tailFormItemLayout = {
 
 export default function BookDirectory() {
   const [form] = Form.useForm();
+
+  const toastOptions = {
+    position: "bottom-right",
+    autoClose: 2000,
+    pauseOnHover: true,
+    draggable: true,
+  };
   const onFinish = async (values) => {
     values.publishedDate = values.publishedDate.format(
       "YYYY-MM-DDTHH:mm:ss.SSS[Z]"
@@ -45,10 +55,14 @@ export default function BookDirectory() {
     axios
       .post(createBookRoute, values)
       .then((res) => {
-        // console.log(res);
-        console.log(res.data);
+        console.log(res);
+        // console.log(res.data);
+        toast.success("Book created successfully.", toastOptions);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error);
+        toast.error("Book creation failed, maybe isbn exist.", toastOptions);
+      });
   };
 
   return (
@@ -227,9 +241,10 @@ export default function BookDirectory() {
           </Form>
         </div>
         <div className="col-span-8 bg-gray-300 p-3 ml-1 mt-2 border rounded-xl">
-          second column
+          <ListBook />
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }

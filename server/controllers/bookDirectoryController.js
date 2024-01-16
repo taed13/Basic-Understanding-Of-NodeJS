@@ -3,7 +3,7 @@ const bookModel = require("../models/bookDirectoryModel");
 // Create a new book
 module.exports.createBook = async (req, res) => {
   try {
-    console.log(req.body.isbn);
+    // console.log(req.body.isbn);
     // Check if a book with the same ISBN already exists
     const existingBook = await bookModel.findOne({ isbn: req.body.isbn });
     if (existingBook) {
@@ -29,10 +29,17 @@ module.exports.createBook = async (req, res) => {
 // Get all books
 module.exports.getAllBooks = async (req, res) => {
   try {
-    const books = await bookModel.find();
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 5;
+    const skip = (page - 1) * limit;
+
+    const books = await bookModel.find().skip(skip).limit(limit);
+    const total = await bookModel.countDocuments();
+
     res.status(200).json({
       success: true,
       data: books,
+      total: total,
     });
   } catch (error) {
     res.status(500).json({

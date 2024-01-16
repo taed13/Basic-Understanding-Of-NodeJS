@@ -11,3 +11,4 @@ export const getAllQrCodes = `${host}/api/v1/qrcodes`;
 
 // http://127.0.0.1:1337/api/v1/books
 export const createBookRoute = `${host}/api/v1/books`;
+export const getAllBooksRoute = `${host}/api/v1/books`;
