@@ -13,13 +13,16 @@ export default function ListBook() {
     axios
       .get(getAllBooksRoute + `?page=${page}`)
       .then((res) => {
-        setBooks(res.data.data);
+        const booksWithPublishedDate = res.data.data.filter(
+          (book) => book.publishedDate
+        );
+        setBooks(booksWithPublishedDate);
         setTotal(parseInt(res.data.total));
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [page]); // Depend on page, not books
+  }, [page, books]); // Depend on page, not books
 
   const handlePageChange = (page) => {
     setPage(page);

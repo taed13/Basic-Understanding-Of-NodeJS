@@ -30,10 +30,14 @@ module.exports.createBook = async (req, res) => {
 module.exports.getAllBooks = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 5;
+    const limit = parseInt(req.query.limit) || 16;
     const skip = (page - 1) * limit;
 
-    const books = await bookModel.find().skip(skip).limit(limit);
+    const books = await bookModel
+      .find()
+      .sort({ _id: -1 })
+      .skip(skip)
+      .limit(limit);
     const total = await bookModel.countDocuments();
 
     res.status(200).json({
