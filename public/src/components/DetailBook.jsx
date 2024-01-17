@@ -1,8 +1,44 @@
-import React, { useState } from "react";
-import { deleteBookRoute } from "../utils/APIRoutes";
+import React, { useEffect, useState } from "react";
+import { deleteBookRoute, updateBookRoute } from "../utils/APIRoutes";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Button, Form, Input, Select, DatePicker } from "antd";
+import TextArea from "antd/es/input/TextArea";
+import { createBookRoute } from "../utils/APIRoutes";
+import moment from "moment";
+import dayjs from "dayjs";
+
+const formItemLayout = {
+  labelCol: {
+    xs: {
+      span: 24,
+    },
+    sm: {
+      span: 8,
+    },
+  },
+  wrapperCol: {
+    xs: {
+      span: 24,
+    },
+    sm: {
+      span: 16,
+    },
+  },
+};
+const tailFormItemLayout = {
+  wrapperCol: {
+    xs: {
+      span: 24,
+      offset: 0,
+    },
+    sm: {
+      span: 16,
+      offset: 8,
+    },
+  },
+};
 
 export default function DetailBook({ book }) {
   const [isModalDetailOpen, setIsModalDetailOpen] = useState(false);
@@ -10,6 +46,8 @@ export default function DetailBook({ book }) {
   const [isModalEditOpen, setIsModalEditOpen] = useState(false);
   const [showMoreShort, setShowMoreShort] = useState(false);
   const [showMoreLong, setShowMoreLong] = useState(false);
+
+  const [form] = Form.useForm();
 
   const toastOptions = {
     position: "bottom-right",
@@ -29,6 +67,30 @@ export default function DetailBook({ book }) {
         console.log(err);
         toast.error("Book failed to delete.", toastOptions);
       });
+  };
+
+  const onFinish = async (values) => {
+    values.publishedDate = values.publishedDate.format(
+      "YYYY-MM-DDTHH:mm:ss.SSS[Z]"
+    );
+    // console.log("Received values of form: ", values);
+    // console.log(book._id);
+    axios
+      .put(`${updateBookRoute}/${book._id}`, values)
+      .then((response) => {
+        console.log("New value: ", response.data);
+        // setTasks(
+        //   tasks.map((task) =>
+        //     task._id === response.data.data._id ? response.data.data : task
+        //   )
+        // );
+        setIsModalEditOpen(false);
+      })
+      .catch((error) => {
+        console.error("Error updating task:", error);
+      });
+
+    toast.success("Task updated successfully!", toastOptions);
   };
 
   return (
@@ -227,105 +289,184 @@ export default function DetailBook({ book }) {
                     onClick={(e) => e.stopPropagation()}
                   >
                     {/*content*/}
-                    <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                    <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full  outline-none focus:outline-none">
                       {/*header*/}
 
-                      <div className="grid grid-cols-12">
-                        <div className="col-span-4 bg-gray-300 border rounded-lg p-4">
-                          <img
-                            src={book.thumbnailUrl}
-                            alt={book.title}
-                            className="w-64 h-64 rounded-lg"
-                          />
-                        </div>
-                        <div className="col-span-8 bg-gray-300 border rounded-lg p-4">
-                          <div className="border-b border-gray-400">
-                            <div className="titleNpublishdate flex items-center">
-                              <h2 className="text-xl font-bold mr-2">
-                                {book.title}
-                              </h2>{" "}
-                              -
-                              <p className="text-gray-500 ml-2">
-                                {new Date(
-                                  book.publishedDate
-                                ).toLocaleDateString("en-US", {
-                                  year: "numeric",
-                                  month: "long",
-                                  day: "2-digit",
-                                })}
-                              </p>
-                            </div>
-                            <div className="authors flex items-center">
-                              <p className="mr-2">
-                                by{" "}
-                                <span className=" text-blue-600">
-                                  {book.authors.join(", ")}
-                                </span>{" "}
-                                (
-                                {book.authors.length >= 2
-                                  ? "Authors"
-                                  : "Author"}
-                                )
-                              </p>
-                            </div>
-                            <div className="statusNisbn">
-                              <p className="text-yellow-700 ">
-                                {book.status} - ISBN: {book.isbn}
-                              </p>
-                            </div>
-                          </div>
+                      <div className="col-span-4 bg-gray-300 p-3 mr-1 mt-2 border rounded-xl">
+                        <p className="text-xl font-bold">Edit book</p>
+                        <Form
+                          {...formItemLayout}
+                          form={form}
+                          name="register"
+                          onFinish={onFinish}
+                          style={{
+                            maxWidth: 600,
+                          }}
+                          initialValues={{
+                            title: book.title,
+                            isbn: book.isbn,
+                            pageCount: book.pageCount,
+                            publishedDate: dayjs(book.publishedDate),
+                            thumbnailUrl: book.thumbnailUrl,
+                            shortDescription: book.shortDescription,
+                            longDescription: book.longDescription,
+                            status: book.status,
+                            authors: book.authors.join(", "),
+                            categories: book.categories.join(", "),
+                          }}
+                          scrollToFirstError
+                        >
+                          <Form.Item
+                            name="title"
+                            label="Book Title"
+                            rules={[
+                              {
+                                required: true,
+                                message: "Please input your Book Title!",
+                              },
+                            ]}
+                          >
+                            <Input />
+                          </Form.Item>
 
-                          <div className="description mt-2 p-3">
-                            {book.shortDescription && (
-                              <>
-                                <p className="font-semibold">
-                                  SHORT DESCRIPTION
-                                </p>
-                                <p>
-                                  {showMoreShort
-                                    ? book.shortDescription
-                                    : `${book.shortDescription.substring(
-                                        0,
-                                        100
-                                      )}...`}
-                                </p>
-                                <button
-                                  onClick={() =>
-                                    setShowMoreShort(!showMoreShort)
-                                  }
-                                  className="text-blue-500 hover:underline bg-transparent border-none"
-                                >
-                                  {showMoreShort ? "Show Less" : "Show More"}
-                                </button>
-                              </>
-                            )}
-                            {book.longDescription && (
-                              <>
-                                <p className="font-semibold mt-2">
-                                  LONG DESCRIPTION
-                                </p>
-                                <p>
-                                  {showMoreLong
-                                    ? book.longDescription
-                                    : `${book.longDescription.substring(
-                                        0,
-                                        100
-                                      )}...`}
-                                </p>
-                                <button
-                                  onClick={() => setShowMoreLong(!showMoreLong)}
-                                  className="text-blue-500 hover:underline bg-transparent border-none"
-                                >
-                                  {showMoreLong ? "Show Less" : "Show More"}
-                                </button>
-                              </>
-                            )}
-                            {!book.shortDescription &&
-                              !book.longDescription && (
-                                <p>Don't have description</p>
-                              )}
-                          </div>
-                        </div>
+                          <Form.Item
+                            name="isbn"
+                            label="ISBN"
+                            rules={[
+                              {
+                                required: true,
+                                message: "Please input your ISBN!",
+                              },
+                            ]}
+                          >
+                            <Input />
+                          </Form.Item>
+
+                          <Form.Item
+                            name="pageCount"
+                            label="Page Count"
+                            rules={[
+                              {
+                                required: true,
+                                message: "Please input your Page Count!",
+                              },
+                            ]}
+                          >
+                            <Input />
+                          </Form.Item>
+
+                          <Form.Item
+                            name="publishedDate"
+                            label="Published Date"
+                            rules={[
+                              {
+                                required: true,
+                                message: "Please input your Published Date!",
+                              },
+                            ]}
+                          >
+                            <DatePicker />
+                          </Form.Item>
+
+                          {/* thumbnailUrl */}
+                          <Form.Item
+                            name="thumbnailUrl"
+                            label="Thumbnail Url"
+                            rules={[
+                              {
+                                required: true,
+                                message: "Please input your Thumbnail Url!",
+                              },
+                            ]}
+                          >
+                            <Input />
+                          </Form.Item>
+
+                          {/* shortDescription */}
+                          <Form.Item
+                            name="shortDescription"
+                            label="Short Description"
+                            rules={[
+                              {
+                                required: true,
+                                message: "Please input your Short Description!",
+                              },
+                            ]}
+                          >
+                            <TextArea />
+                          </Form.Item>
+
+                          {/* longDescription */}
+                          <Form.Item
+                            name="longDescription"
+                            label="Long Description"
+                            rules={[
+                              {
+                                required: true,
+                                message: "Please input your Long Description!",
+                              },
+                            ]}
+                          >
+                            <TextArea />
+                          </Form.Item>
+
+                          {/* status */}
+                          <Form.Item
+                            name="status"
+                            label="Status"
+                            rules={[
+                              {
+                                required: true,
+                                message: "Please input your Status!",
+                              },
+                            ]}
+                          >
+                            <Select placeholder="PUBLISH - MEAP">
+                              <Select.Option value="PUBLISH">
+                                PUBLISH
+                              </Select.Option>
+                              <Select.Option value="MEAP">MEAP</Select.Option>
+                            </Select>
+                          </Form.Item>
+
+                          {/* authors */}
+                          <Form.Item
+                            name="authors"
+                            label="Authors"
+                            rules={[
+                              {
+                                required: true,
+                                message: "Please input your Authors!",
+                              },
+                            ]}
+                          >
+                            <Input />
+                          </Form.Item>
+
+                          {/* categories */}
+                          <Form.Item
+                            name="categories"
+                            label="Categories"
+                            rules={[
+                              {
+                                required: true,
+                                message: "Please input your Categories!",
+                              },
+                            ]}
+                          >
+                            <Input />
+                          </Form.Item>
+
+                          <Form.Item {...tailFormItemLayout}>
+                            <Button
+                              type="primary"
+                              htmlType="submit"
+                              className="bg-yellow-500"
+                            >
+                              Edit Book
+                            </Button>
+                          </Form.Item>
+                        </Form>
                       </div>
                     </div>
                   </div>

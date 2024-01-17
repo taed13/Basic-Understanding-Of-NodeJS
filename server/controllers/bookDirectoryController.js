@@ -79,6 +79,16 @@ module.exports.getBookById = async (req, res) => {
 module.exports.updateBookById = async (req, res) => {
   try {
     const { id } = req.params;
+    const { isbn } = req.body;
+
+    const existingBook = await bookModel.findOne({ isbn });
+
+    if (existingBook && String(existingBook._id) !== id) {
+      return res.status(400).json({
+        success: false,
+        message: "A book with this ISBN already exists.",
+      });
+    }
 
     // console.log(id);
     const book = await bookModel.findByIdAndUpdate(id, {

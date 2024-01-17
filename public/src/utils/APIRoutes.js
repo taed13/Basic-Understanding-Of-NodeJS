@@ -14,3 +14,5 @@ export const createBookRoute = `${host}/api/v1/books`;
 export const getAllBooksRoute = `${host}/api/v1/books`;
 // deleteBookRoute
 export const deleteBookRoute = `${host}/api/v1/books`;
+// updateBookRoute
+export const updateBookRoute = `${host}/api/v1/books`;
