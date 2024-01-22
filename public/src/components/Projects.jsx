@@ -46,6 +46,13 @@ export default function Projects() {
                 name="Discord Bot"
               />
             </Link>
+
+            <Link to="https://github.com/taed13/nodejs-api-auth-jwt">
+              <DetailProject
+                imgSrc="https://images.ctfassets.net/23aumh6u8s0i/16VIM0ExdiVtMpEVamzZzG/a0b6699a966257d51fa001ab55ddf5b4/jwt_05"
+                name="JWT Authentication"
+              />
+            </Link>
           </div>
         </div>
       </Container>
