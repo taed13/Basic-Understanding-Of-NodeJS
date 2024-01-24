@@ -16,12 +16,12 @@ export default function Projects() {
                 name="Task Manager"
               />
             </Link>
-            <Link to="https://chatapp-ui-roan.vercel.app/">
+            <a href="https://chatapp-ui-roan.vercel.app/" target="_blank">
               <DetailProject
                 imgSrc="https://static.vecteezy.com/system/resources/thumbnails/021/885/976/original/4k-animation-of-chat-mobile-application-for-business-businessman-and-businesswoman-communicate-with-mobile-app-on-big-hand-holding-smart-phone-free-video.jpg"
                 name="Chat App Real Time"
               />
-            </Link>
+            </a>
             <Link to="/qrcode-generator">
               <DetailProject
                 imgSrc="https://www.qr-generator.nu/qrcode.svg?download=1"
@@ -34,12 +34,12 @@ export default function Projects() {
                 name="Book Directory"
               />
             </Link>
-            <Link to="https://nhanhouse.vercel.app/">
+            <a href="https://nhanhouse.vercel.app/" target="_blank">
               <DetailProject
                 imgSrc="https://media-cdn.tripadvisor.com/media/photo-p/18/8c/39/6c/nhanhouse-mat-truoc.jpg"
                 name="Nhan House"
               />
-            </Link>
+            </a>
             <Link to="/discord-bot">
               <DetailProject
                 imgSrc="https://images.ctfassets.net/lzny33ho1g45/how-to-make-discord-bot-withou-p-img/18fdb59df96ee1bc0a4dcc7ac4ceec2f/Group_12427.jpg?w=1520&fm=jpg&q=30&fit=thumb&h=760"
@@ -47,12 +47,26 @@ export default function Projects() {
               />
             </Link>
 
-            <Link to="https://github.com/taed13/nodejs-api-auth-jwt">
+            <a
+              href="https://github.com/taed13/nodejs-api-auth-jwt"
+              target="_blank"
+            >
               <DetailProject
                 imgSrc="https://images.ctfassets.net/23aumh6u8s0i/16VIM0ExdiVtMpEVamzZzG/a0b6699a966257d51fa001ab55ddf5b4/jwt_05"
                 name="JWT Authentication"
               />
-            </Link>
+            </a>
+
+            <a
+              href="https://bamboolee.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <DetailProject
+                imgSrc="https://images.pexels.com/photos/14936128/pexels-photo-14936128.jpeg?cs=srgb&dl=pexels-ann-h-14936128.jpg&fm=jpg"
+                name="Bamboo Lee Portfolio"
+              />
+            </a>
           </div>
         </div>
       </Container>
