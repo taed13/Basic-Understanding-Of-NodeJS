@@ -13,7 +13,9 @@ app.use(express.json());
 
 app.get("/", (req, res) => {
   res.json({
-    message: "HOME ROUTER UNDERSTAND NODEJS",
+    message:
+      "Chúc Lê, người yêu anh một năm mới thật ngọt ngào, yêu em bằng cả trái tim của anh. Anh yêu em nhiều lắm lắm lắm lắm!",
+    status: "Anh mong rằng em sẽ luôn hạnh phúc và vui vẻ bên anh hì",
   });
 });
 
